@@ -1,0 +1,21 @@
+a. Adicionar um contato e seus dados; - Ian, Danilo, Matheus Panobianco, Julie, Luis Guilherme
+b. Listar todos os contatos da agenda; - Ian, Danilo, Matheus Panobianco, Julie, Luis Guilherme
+c. Buscar um contato de acordo com uma palavra chave (Utilize os dados de nome, sobrenome para realizar a busca) - Ian, Danilo, Matheus Panobianco, Julie, Luis Guilherme
+d. Remover um contato da agenda; - Danilo
+e. Remover todos os contatos da agenda; - Danilo
+f. Adicionar um telefone a um contato; - Ian
+g. Adicionar um endereço a um contato; - Ian
+h. Remover um telefone de um contato da agenda; - Ian, Danilo, Matheus Panobianco
+i. Remover um endereço de um contato da agenda; - Matheus Panobianco
+j. Exibir todas as informações de um contato da agenda; - Matheus Panobianco
+k. Listar todos os telefones de um contato da agenda; - Luis Guilherme
+l. Listar todos os endereços de um contato da agenda; Luis Guilherme
+m. Exibir todas as informações de um telefone de um contato da agenda; - Julie
+n. Exibir todas as informações de um endereço de um contato da agenda; - Julie
+o. Exibir a lista de contatos com paginação. Incluindo a opção para navegar para a página seguinte ou página anterior; - Ian, Danilo, Julie, Matheus Panobianco, Luis Guilherme
+p. Exibir a lista de telefones com paginação. Incluindo a opção para navegar para a página seguinte ou página anterior; - Ian, Danilo, Julie, Matheus Panobianco, Luis Guilherme
+q. Exibir a lista de endereços com paginação. Incluindo a opção para navegar para a página seguinte ou página anterior; - Ian, Danilo, Julie, Matheus Panobianco, Luis Guilherme
+r. Exportar todos os contatos para um arquivo texto; - Ian
+s. Importar todos os contatos de um arquivo texto; - Ian, Julie
+t. Carregar e salvar automaticamente todos os contatos para um arquivo texto. Tornando a agenda um programa 100% funcional; - Ian, Danilo, Julie, Matheus Panobianco, Luis Guilherme
+extras: Editar infos de contatos ja cadastrados: Ian, Danilo, Julie, Matheus Panobianco, Luis Guilherme
