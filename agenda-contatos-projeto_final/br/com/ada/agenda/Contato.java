@@ -113,5 +113,15 @@ public class Contato {
     public int hashCode() {
         return Objects.hash(nome, sobreNome, email);
     }
+    public String toStringExibir() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(
+                "Nome: %s \n" +
+                        "Sobrenome: %s \n" +
+                        "E-mail: %s \n" +
+                        "Empresa: %s \n", nome, sobreNome, email, empresa
+        ));
+        return sb.toString();
+    }
 }
 

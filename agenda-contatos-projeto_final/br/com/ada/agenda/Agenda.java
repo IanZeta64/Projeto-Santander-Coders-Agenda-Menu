@@ -55,6 +55,7 @@ public class Agenda {
     public void listarContatos() {
         int pg = 1;
         int skip = 0;
+        int numPg = 1;
         boolean continuar;
         if (!this.contatos.isEmpty()) {
             ConsoleUIHelper.drawHeader(String.format("%-13s%-15s%-19s%-29s",
@@ -69,8 +70,13 @@ public class Agenda {
                             contato.getNome(),
                             contato.getSobreNome(),
                             contato.getEmail()), 80);
+
                 });
+
+                System.out.printf("#%75s %d #%n","PAGINA", numPg);
+                ConsoleUIHelper.drawLine(80);
                 if(skip < 5){
+
                        pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
                        if(pg ==1){
                            continuar = false;
@@ -78,8 +84,10 @@ public class Agenda {
                        else {
                            continuar = true;
                            skip = 5;
+                           numPg++;
                        }
                 }else if(this.contatos.size() - skip > 5 ){
+
                         pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
                         if(pg ==1){
                             continuar = false;
@@ -87,12 +95,15 @@ public class Agenda {
                         else if (pg == 2) {
                             continuar = true;
                             skip += 5;
+                            numPg++;
                         }
                         else {
                             continuar = true;
                             skip -=5;
+                            numPg--;
                         }
                     }else {
+
                     pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
 
                     if(pg ==1){
@@ -101,12 +112,11 @@ public class Agenda {
                     else {
                         continuar = true;
                         skip -= 5;
+                        numPg--;
                     }
-
-
                 }
             }while (continuar);
-            ConsoleUIHelper.drawLine(80);
+
 
         } else {
             System.out.println("Não há contatos na agenda.");
@@ -414,15 +424,25 @@ public class Agenda {
                 this.contatos.get((indice - 1)).getEnderecos().forEach(endereco ->
                         System.out.println((this.contatos.get(indice - 1).getEnderecos().indexOf(endereco) + 1)
                                 + " - " + endereco.getLogradouro() + ", " + endereco.getNumero()));
-                String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar endereços?","Sim", "Não"));
+                exibirEnderecosContatoPaginas(indice);
+            }else System.out.println("Esse contato nao tem endereço cadastrado.");
+        }
+    }
+    private void exibirEnderecosContatoPaginas(int indice){
+    String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar endereços?","Sim", "Não"));
                 if (resp.equals("1")) {
                     int pg = 1;
                     int skip = 0;
                     boolean continuar;
+                    int numPg = 1;
 
                     do {
+                        ConsoleUIHelper.drawLine(80);
                         this.contatos.get(indice - 1).getEnderecos().stream().skip(skip).limit(1)
                                 .forEach(System.out::println);
+
+                        System.out.printf("#%75s %d #%n","PAGINA", numPg);
+                        ConsoleUIHelper.drawLine(80);
                         if (skip < 1) {
                             pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
                             if (pg == 1) {
@@ -430,17 +450,20 @@ public class Agenda {
                             } else {
                                 continuar = true;
                                 skip = 1;
+                                numPg++;
                             }
-                        } else if (this.contatos.get(indice-1).getEnderecos().size() - skip > 1) {
+                        } else if (this.contatos.get(indice - 1).getEnderecos().size() - skip > 1) {
                             pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
                             if (pg == 1) {
                                 continuar = false;
                             } else if (pg == 2) {
                                 continuar = true;
                                 skip += 1;
+                                numPg++;
                             } else {
                                 continuar = true;
                                 skip -= 1;
+                                numPg--;
                             }
                         } else {
                             pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
@@ -450,14 +473,11 @@ public class Agenda {
                             } else {
                                 continuar = true;
                                 skip -= 1;
+                                numPg--;
                             }
-
-
                         }
                     } while (continuar);
                 }
-            }else System.out.println("Esse contato nao tem endereço cadastrado.");
-        }
     }
     public void exibirTelefonesContato(Scanner entrada) {
         listarContatos();
@@ -470,51 +490,61 @@ public class Agenda {
                 this.getContatos().get((indice - 1)).getTelefones().forEach(telefone ->
                         System.out.println((this.contatos.get(indice - 1).getTelefones().indexOf(telefone) + 1)
                                 + " - " + telefone.getDdd() + telefone.getNumero()));
-                String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar endereços?","Sim", "Não"));
-                if (resp.equals("1")) {
-                    int pg = 1;
-                    int skip = 0;
-                    boolean continuar;
+                exibirTelefonesContatoPaginas(indice);
 
-                    do {
-                        this.contatos.get(indice - 1).getTelefones().stream().skip(skip).limit(1)
-                                .forEach(System.out::println);
-                        if (skip < 1) {
-                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
-                            if (pg == 1) {
-                                continuar = false;
-                            } else {
-                                continuar = true;
-                                skip = 1;
-                            }
-                        } else if (this.contatos.get(indice-1).getTelefones().size() - skip > 1) {
-                            pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
-                            if (pg == 1) {
-                                continuar = false;
-                            } else if (pg == 2) {
-                                continuar = true;
-                                skip += 1;
-                            } else {
-                                continuar = true;
-                                skip -= 1;
-                            }
-                        } else {
-                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
-
-                            if (pg == 1) {
-                                continuar = false;
-                            } else {
-                                continuar = true;
-                                skip -= 1;
-                            }
-
-
-                        }
-                    } while (continuar);
-                }
             }else System.out.println("Esse contato nao tem telefone cadastrado.");
         }
     }
+private void exibirTelefonesContatoPaginas(int indice) {
+    String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar telefones?", "Sim", "Não"));
+    if (resp.equals("1")) {
+        int pg = 1;
+        int skip = 0;
+        boolean continuar;
+        int numPg = 1;
+        do {
+            ConsoleUIHelper.drawLine(80);
+            this.contatos.get(indice - 1).getTelefones().stream().skip(skip).limit(1)
+                    .forEach(System.out::println);
+
+            System.out.printf("#%75s %d #%n","PAGINA", numPg);
+            ConsoleUIHelper.drawLine(80);
+            if (skip < 1) {
+                pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
+                if (pg == 1) {
+                    continuar = false;
+                } else {
+                    continuar = true;
+                    skip = 1;
+                    numPg++;
+                }
+            } else if (this.contatos.get(indice - 1).getTelefones().size() - skip > 1) {
+                pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
+                if (pg == 1) {
+                    continuar = false;
+                } else if (pg == 2) {
+                    continuar = true;
+                    skip += 1;
+                    numPg++;
+                } else {
+                    continuar = true;
+                    skip -= 1;
+                    numPg--;
+                }
+            } else {
+                pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
+
+                if (pg == 1) {
+                    continuar = false;
+                } else {
+                    continuar = true;
+                    skip -= 1;
+                    numPg--;
+                }
+            }
+        } while (continuar);
+    }
+}
     public void exibirInfosContato(Scanner entrada) {
         listarContatos();
         if (!getContatos().isEmpty()) {
@@ -523,6 +553,7 @@ public class Agenda {
             String sobrenome = this.getContatos().get((indice - 1)).getSobreNome();
             String empresa = this.getContatos().get((indice - 1)).getEmpresa();
             String email = this.getContatos().get((indice - 1)).getEmail();
+            ConsoleUIHelper.drawLine(80);
             System.out.println("As informações do contato " +
                     (this.getContatos().indexOf(this.getContatos().get(indice - 1))+1) +
                     ", são:\nNome Completo: " + nome + " " + sobrenome + "\nTelefone(s):");
@@ -533,9 +564,15 @@ public class Agenda {
             this.contatos.get((indice - 1)).getEnderecos().forEach(endereco ->
                     System.out.println((this.contatos.get(indice - 1).getEnderecos().indexOf(endereco) + 1)
                             + " - " + endereco.getLogradouro() + ", " + endereco.getNumero()));
-
-            int indExpandir = ConsoleUIHelper.askChooseOption("Deseja expandir informação de contato?", "Sim", "Não");
-            if (indExpandir == 1) System.out.println(this.getContatos().get((indice - 1)).toString());
+            ConsoleUIHelper.drawLine(80);
+            String indExpandir = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja expandir informação de contato?", "Sim", "Não"));
+            if (indExpandir.equals("1")) {
+                ConsoleUIHelper.drawLine(80);
+                System.out.print(this.getContatos().get((indice - 1)).toStringExibir());
+                ConsoleUIHelper.drawLine(80);
+                exibirTelefonesContatoPaginas(indice);
+                exibirEnderecosContatoPaginas(indice);
+            }
 
         }
     }
