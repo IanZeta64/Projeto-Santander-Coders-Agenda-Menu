@@ -30,21 +30,82 @@ public class Agenda {
             System.out.println("Não é possivel adicionar contatos ja existentes/duplicados, tente novamente com\noutras informações.");
     }
 
+//    public void listarContatos() {
+//        if (!this.contatos.isEmpty()) {
+//            ConsoleUIHelper.drawHeader(String.format("%-13s%-15s%-19s%-29s",
+//                    "INDICE",
+//                    "NOME",
+//                    "SOBRENOME",
+//                    "E-MAIL"), 80);
+//
+//            this.contatos.forEach(contato -> {
+//                ConsoleUIHelper.drawWithPadding(String.format(("%-13s%-15s%-19s%-29s"),
+//                        (this.contatos.indexOf(contato) + 1),
+//                        contato.getNome(),
+//                        contato.getSobreNome(),
+//                        contato.getEmail()), 80);
+//            });
+//            ConsoleUIHelper.drawLine(80);
+//
+//        } else {
+//            System.out.println("Não há contatos na agenda.");
+//        }
+//    }
+
     public void listarContatos() {
+        int pg = 1;
+        int skip = 0;
+        boolean continuar;
         if (!this.contatos.isEmpty()) {
             ConsoleUIHelper.drawHeader(String.format("%-13s%-15s%-19s%-29s",
                     "INDICE",
                     "NOME",
                     "SOBRENOME",
                     "E-MAIL"), 80);
+            do {
+                this.contatos.stream().skip(skip).limit(5).forEach(contato -> {
+                    ConsoleUIHelper.drawWithPadding(String.format(("%-13s%-15s%-19s%-29s"),
+                            (this.contatos.indexOf(contato) + 1),
+                            contato.getNome(),
+                            contato.getSobreNome(),
+                            contato.getEmail()), 80);
+                });
+                if(skip < 5){
+                       pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
+                       if(pg ==1){
+                           continuar = false;
+                       }
+                       else {
+                           continuar = true;
+                           skip = 5;
+                       }
+                }else if(this.contatos.size() - skip > 5 ){
+                        pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
+                        if(pg ==1){
+                            continuar = false;
+                        }
+                        else if (pg == 2) {
+                            continuar = true;
+                            skip += 5;
+                        }
+                        else {
+                            continuar = true;
+                            skip -=5;
+                        }
+                    }else {
+                    pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
 
-            this.contatos.forEach(contato -> {
-                ConsoleUIHelper.drawWithPadding(String.format(("%-13s%-15s%-19s%-29s"),
-                        (this.contatos.indexOf(contato) + 1),
-                        contato.getNome(),
-                        contato.getSobreNome(),
-                        contato.getEmail()), 80);
-            });
+                    if(pg ==1){
+                        continuar = false;
+                    }
+                    else {
+                        continuar = true;
+                        skip -= 5;
+                    }
+
+
+                }
+            }while (continuar);
             ConsoleUIHelper.drawLine(80);
 
         } else {
@@ -353,8 +414,48 @@ public class Agenda {
                 this.contatos.get((indice - 1)).getEnderecos().forEach(endereco ->
                         System.out.println((this.contatos.get(indice - 1).getEnderecos().indexOf(endereco) + 1)
                                 + " - " + endereco.getLogradouro() + ", " + endereco.getNumero()));
-                int indExpandir = Integer.parseInt(ConsoleUIHelper.askSimpleInput("Digite o indice do endereço que deseja expandir exibição:"));
-                System.out.println(this.getContatos().get((indice - 1)).getEnderecos().get(indExpandir - 1));
+                String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar endereços?","Sim", "Não"));
+                if (resp.equals("1")) {
+                    int pg = 1;
+                    int skip = 0;
+                    boolean continuar;
+
+                    do {
+                        this.contatos.get(indice - 1).getEnderecos().stream().skip(skip).limit(1)
+                                .forEach(System.out::println);
+                        if (skip < 1) {
+                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
+                            if (pg == 1) {
+                                continuar = false;
+                            } else {
+                                continuar = true;
+                                skip = 1;
+                            }
+                        } else if (this.contatos.get(indice-1).getEnderecos().size() - skip > 1) {
+                            pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
+                            if (pg == 1) {
+                                continuar = false;
+                            } else if (pg == 2) {
+                                continuar = true;
+                                skip += 1;
+                            } else {
+                                continuar = true;
+                                skip -= 1;
+                            }
+                        } else {
+                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
+
+                            if (pg == 1) {
+                                continuar = false;
+                            } else {
+                                continuar = true;
+                                skip -= 1;
+                            }
+
+
+                        }
+                    } while (continuar);
+                }
             }else System.out.println("Esse contato nao tem endereço cadastrado.");
         }
     }
@@ -369,8 +470,48 @@ public class Agenda {
                 this.getContatos().get((indice - 1)).getTelefones().forEach(telefone ->
                         System.out.println((this.contatos.get(indice - 1).getTelefones().indexOf(telefone) + 1)
                                 + " - " + telefone.getDdd() + telefone.getNumero()));
-                int indExpandir = Integer.parseInt(ConsoleUIHelper.askSimpleInput("Digite o indice do telefone que deseja expandir exibição:"));
-                System.out.println(this.getContatos().get((indice - 1)).getTelefones().get(indExpandir - 1));
+                String resp = Integer.toString(ConsoleUIHelper.askChooseOption("Deseja detalhar endereços?","Sim", "Não"));
+                if (resp.equals("1")) {
+                    int pg = 1;
+                    int skip = 0;
+                    boolean continuar;
+
+                    do {
+                        this.contatos.get(indice - 1).getTelefones().stream().skip(skip).limit(1)
+                                .forEach(System.out::println);
+                        if (skip < 1) {
+                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Proxima pagina");
+                            if (pg == 1) {
+                                continuar = false;
+                            } else {
+                                continuar = true;
+                                skip = 1;
+                            }
+                        } else if (this.contatos.get(indice-1).getTelefones().size() - skip > 1) {
+                            pg = ConsoleUIHelper.askChooseOption("\"Deseja sair ou passar de pagina?", "Sair", "Proxima pagina", "Pagina anterior");
+                            if (pg == 1) {
+                                continuar = false;
+                            } else if (pg == 2) {
+                                continuar = true;
+                                skip += 1;
+                            } else {
+                                continuar = true;
+                                skip -= 1;
+                            }
+                        } else {
+                            pg = ConsoleUIHelper.askChooseOption("Deseja sair ou passar de pagina?", "Sair", "Pagina anterior");
+
+                            if (pg == 1) {
+                                continuar = false;
+                            } else {
+                                continuar = true;
+                                skip -= 1;
+                            }
+
+
+                        }
+                    } while (continuar);
+                }
             }else System.out.println("Esse contato nao tem telefone cadastrado.");
         }
     }
@@ -443,7 +584,7 @@ public class Agenda {
 
             switch (Integer.toString(ConsoleUIHelper.askChooseOption("# ESCOLHA UM INDICE DO MENU:",
                     "Adicionar Contato",
-                    "Listar Contatos",
+                    "Listar Contatos com paginas",
                     "Buscar Contato",
                     "Remover contato",
                     "Remover todos os contatos",
