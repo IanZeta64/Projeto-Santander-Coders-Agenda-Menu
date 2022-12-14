@@ -1,0 +1,1 @@
+{"nome":"Rafael","sobreNome":"Lima","empresa":"Ada","email":"rafeal@email.com","telefones":[{"tipo":"RESIDENCIAL","ddi":"55","ddd":"18","numero":"90900909"}],"enderecos":[{"tipo":"COMERCIAL","logradouro":"Rua trinta","bairro":"Numeros","cep":"303030303","numero":"30","complemento":"30","cidade":"Tres Corações","uf":"MG"}]}
