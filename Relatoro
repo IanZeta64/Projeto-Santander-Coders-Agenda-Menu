@@ -1,9 +1,0 @@
-Desde o início do projeto, tentamos desenvolver o programa juntos o máximo possível, nos reunindo no Discord, debatendo diferentes formas de desenvolvimento e sugestões de melhorias.
-
-Todos os requisitos obrigatórios e adicionais foram desenvolvidos. Entretanto, com relação aos adicionais, o desenvolvimento da paginação foi o mais trabalhoso, por termos dificuldade.
-
-Outras partes desenvolvidas que tivemos dificuldade foram a de busca, importar e exportar os contatos para um arquivo de texto, e também utilizar do JSon para salvar e ler arquivos.
-
-A utilização da biblioteca Jackson facilitou o desenvolvimento de importação e exportação dos contatos, sendo uma das partes mais interessantes de aprendizado no projeto.
-
-O desenvolvimento da busca foi inusitado, pois inicialmente os contatos eram retornados apenas se fossem idênticos a busca, depois usamos outra função (contains) onde qualquer combinação era encontrada independentemente da posição na palavra. No final optamos por uma forma mais “verbosa”, porém mais funcional, onde a busca é comparada com as letras iniciais e mostra todos os contatos que contém aquele início, podendo ser realizada até com apenas uma letra.
